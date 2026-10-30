@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday!</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Hiệu ứng trái tim rơi nền -->
+  <div class="hearts-bg" id="heartsBg"></div>
+
+  <main class="container">
+    
+    <!-- STEP 1: CHÀO MỪNG -->
+    <section class="step active" id="step1">
+      <h1 class="title-blue">Happy Birthday! 💙</h1>
+      <div class="avatar-box">
+        <img src="./img1.png" alt="Cat Icon" class="cat-avatar">
+      </div>
+      <p class="kaomoji">(oo_oo)</p>
+      <p class="sub-text">Click the next button!! (っっ)っ💙</p>
+      <button class="btn-primary" onclick="goToStep(2)">Next!! ^w^</button>
+    </section>
+
+    <!-- STEP 2: BÀI HÁT TẶNG BẠN -->
+    <section class="step" id="step2">
+      <h2 class="title-blue">🎵 A Song Just For You</h2>
+      <div class="video-container">
+        <!-- Thay ID video YouTube của bạn vào src bên dưới -->
+        <iframe width="1304" height="733" src="https://www.youtube.com/embed/Egx0AXIIChA" title="Malcolm Todd - Roommates" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      <div class="song-info">
+        <h3>Roommates</h3>
+        <p class="artist">Malcolm Todd</p>
+      </div>
+      <blockquote class="quote">
+        "This song reminds me of you. Every time I listen to it, I realize how much I want to be closer to you, but I don't always know how."
+      </blockquote>
+      <button class="btn-primary" onclick="goToStep(3)">Next &rarr;</button>
+    </section>
+
+    <!-- STEP 3: LỜI DẪN BỨC THƯ -->
+    <section class="step" id="step3">
+      <div class="mail-icon-box">
+        <span class="mail-icon">✉️</span>
+      </div>
+      <h2 class="title-dark">I wrote a letter for you...</h2>
+      <button class="btn-primary" onclick="goToStep(4)">Next &rarr;</button>
+    </section>
+
+    <!-- STEP 4: HỎI MỞ THƯ -->
+    <section class="step" id="step4">
+      <h2 class="title-dark">Do you want to open it? "ヾ(≧▽≦)ノ"</h2>
+      <div class="image-card">
+        <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&auto=format&fit=crop" alt="Cute Cat">
+      </div>
+      <div class="btn-group">
+        <button class="btn-primary" onclick="goToStep(6)">Open it</button>
+        <button class="btn-secondary" onclick="goToStep(5)">No ty</button>
+      </div>
+    </section>
+
+    <!-- STEP 5: MÀN HÌNH THỬ LẠI (Nếu bấm "No ty") -->
+    <section class="step" id="step5">
+      <h2 class="title-dark">Awh... Let's try again, Please..? &gt;_&lt;</h2>
+      <button class="btn-primary" onclick="goToStep(4)">Again..?</button>
+    </section>
+
+    <!-- STEP 6: NỘI DUNG LÁ THƯ FINAL -->
+    <section class="step" id="step6">
+      <h2 class="title-blue">💌 Happy Birthday</h2>
+      <div class="blue-hearts">💙💙💙</div>
+      <div class="letter-card">
+        <p>Happy birthday, Daisy. I'm so glad I got to meet you, and thank you for giving me a second chance to get to know you. I want you to know that you keep me going even when things get hard, and that inspires me so much.</p>
+        <p>Thank you for being understanding of me, and I hope this isn't too much for you cause I know you struggle with avoidant feelings sometimes, so I'm sorry in advance if I ever overwhelm you Huhu.</p>
+        <p>But most of all, you deserve the very best, today and every day. Enjoy your day po happy birthday again, Pookie!!! 💗</p>
+      </div>
+      <button class="btn-primary" onclick="goToStep(1)">Replay 🔄</button>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
