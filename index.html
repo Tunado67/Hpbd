@@ -27,14 +27,49 @@
     <!-- STEP 2: BÀI HÁT TẶNG BẠN -->
     <section class="step" id="step2">
       <h2 class="title-blue">🎵 A Song Just For You</h2>
-      <div class="video-container">
-        <!-- Thay ID video YouTube của bạn vào src bên dưới -->
-        <iframe width="1304" height="733" src="https://www.youtube.com/embed/Egx0AXIIChA" title="Malcolm Todd - Roommates" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+      <!-- Native Vinyl Record Player -->
+      <div class="record-player">
+        <div class="turntable">
+          <div class="vinyl-record" id="vinylRecord">
+            <div class="vinyl-grooves"></div>
+            <div class="vinyl-center">
+              <img src="music-cover.png" alt="Love Me Not Cover" class="cover-art">
+              <div class="center-hole"></div>
+            </div>
+          </div>
+          <div class="tone-arm">
+            <div class="tone-arm-base"></div>
+            <div class="tone-arm-rod"></div>
+            <div class="tone-arm-head"></div>
+          </div>
+        </div>
+
+        <audio id="audioPlayer" src="love-me-not.opus" preload="metadata"></audio>
+
+        <div class="song-info">
+          <h3 class="track-title">Love Me Not</h3>
+          <p class="artist">Ravyn Lenae</p>
+        </div>
+
+        <div class="player-controls">
+          <div class="time-container">
+            <span id="currentTime" class="time-text">0:00</span>
+            <input type="range" id="progressBar" class="progress-bar" value="0" min="0" max="100" step="0.1" aria-label="Timeline progress">
+            <span id="durationTime" class="time-text">0:00</span>
+          </div>
+          <button id="playPauseBtn" class="play-btn" aria-label="Play or Pause">
+            <svg id="playIcon" class="control-icon" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+              <polygon points="6 4, 20 12, 6 20"></polygon>
+            </svg>
+            <svg id="pauseIcon" class="control-icon hidden" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+              <rect x="5" y="4" width="4" height="16" rx="1"></rect>
+              <rect x="15" y="4" width="4" height="16" rx="1"></rect>
+            </svg>
+          </button>
+        </div>
       </div>
-      <div class="song-info">
-        <h3>Roommates</h3>
-        <p class="artist">Malcolm Todd</p>
-      </div>
+
       <blockquote class="quote">
         "This song reminds me of you. Every time I listen to it, I realize how much I want to be closer to you, but I don't always know how."
       </blockquote>
