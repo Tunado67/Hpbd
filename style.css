@@ -8,7 +8,9 @@
 html, body {
   height: 100vh;
   height: 100dvh;
+  width: 100%;
   overflow: hidden;
+  position: fixed;
 }
 
 body {
@@ -106,6 +108,54 @@ body {
   margin-bottom: clamp(10px, 2vh, 16px);
 }
 
+/* Floating Music Toggle Icon */
+.floating-music-btn {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 50;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #ffb7b2;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 183, 178, 0.5);
+  transition: all 0.25s ease;
+  outline: none;
+}
+
+.floating-music-btn:hover {
+  background-color: #ff9994;
+  transform: scale(1.08);
+}
+
+.floating-music-btn:active {
+  transform: scale(0.95);
+}
+
+.floating-music-btn.hidden {
+  display: none !important;
+}
+
+.floating-music-btn.active .music-note-icon,
+.floating-music-btn.playing .music-note-icon {
+  animation: subtleSpin 4s linear infinite;
+}
+
+@keyframes subtleSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* Buttons - Phối hồng pastel và xanh pastel */
 .btn-primary {
   background-color: #ffb7b2; /* Hồng pastel */
@@ -179,8 +229,10 @@ body {
 
 .turntable {
   position: relative;
-  width: clamp(140px, 22vh, 180px);
-  height: clamp(140px, 22vh, 180px);
+  width: 190px;
+  height: 190px;
+  max-width: 190px;
+  max-height: 190px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -189,8 +241,8 @@ body {
 
 /* Vinyl Record */
 .vinyl-record {
-  width: 100%;
-  height: 100%;
+  width: 190px;
+  height: 190px;
   border-radius: 50%;
   background: radial-gradient(circle, #2a2a2a 0%, #111111 50%, #050505 100%);
   position: relative;
@@ -198,11 +250,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: spinRecord 6s linear infinite;
+  animation: spin 6s linear infinite;
   animation-play-state: paused;
 }
 
-.vinyl-record.playing {
+.vinyl-record.playing,
+.vinyl-record.animate-spin {
   animation-play-state: running;
 }
 
@@ -248,6 +301,7 @@ body {
 .vinyl-center .cover-art {
   width: 100%;
   height: 100%;
+  border-radius: 50%;
   object-fit: cover;
 }
 
@@ -313,13 +367,17 @@ body {
   box-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 
-@keyframes spinRecord {
+@keyframes spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
   }
+}
+
+.animate-spin {
+  animation: spin 6s linear infinite;
 }
 
 .song-info {
