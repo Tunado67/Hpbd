@@ -5,14 +5,18 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+html, body {
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
 body {
   background-color: #fdf2f4; /* Nền hồng pastel nhẹ nhàng */
-  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  overflow-x: hidden;
 }
 
 /* Background Hearts - Trộn màu xanh pastel và hồng pastel */
@@ -41,20 +45,28 @@ body {
 /* Container & Step Transition */
 .container {
   width: 90%;
-  max-width: 480px;
+  max-width: 440px;
+  max-height: calc(100vh - 24px);
+  max-height: calc(100dvh - 24px);
   z-index: 1;
   text-align: center;
-  padding: 25px;
+  padding: clamp(14px, 3vh, 24px);
   background-color: #ffffff; /* Khung nền trắng */
   border-radius: 24px;
   box-shadow: 0 10px 30px rgba(255, 182, 193, 0.25); /* Đổ bóng hồng pastel nhẹ */
   border: 2px solid #fce7f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .step {
   display: none;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 100%;
   animation: fadeIn 0.4s ease-in-out forwards;
 }
 
@@ -70,28 +82,28 @@ body {
 /* Typo Styles - Xanh pastel chủ đạo */
 .title-blue {
   color: #7ba4d9; /* Xanh pastel */
-  font-size: 1.8rem;
+  font-size: clamp(1.3rem, 3.5vh, 1.7rem);
   font-weight: 700;
-  margin-bottom: 15px;
+  margin-bottom: clamp(6px, 1.5vh, 12px);
 }
 
 .title-dark {
   color: #5c6b73;
-  font-size: 1.5rem;
+  font-size: clamp(1.2rem, 3vh, 1.5rem);
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: clamp(8px, 1.8vh, 15px);
 }
 
 .kaomoji {
-  font-size: 1.1rem;
+  font-size: clamp(0.95rem, 2.2vh, 1.1rem);
   color: #7ba4d9;
-  margin: 8px 0;
+  margin: 6px 0;
 }
 
 .sub-text {
   color: #8c9ba5;
-  font-size: 0.95rem;
-  margin-bottom: 20px;
+  font-size: clamp(0.85rem, 2vh, 0.95rem);
+  margin-bottom: clamp(10px, 2vh, 16px);
 }
 
 /* Buttons - Phối hồng pastel và xanh pastel */
@@ -99,9 +111,9 @@ body {
   background-color: #ffb7b2; /* Hồng pastel */
   color: #ffffff;
   border: none;
-  padding: 12px 28px;
+  padding: clamp(9px, 1.6vh, 12px) clamp(20px, 4vw, 28px);
   border-radius: 25px;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 2vh, 1rem);
   font-weight: 600;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(255, 183, 178, 0.4);
@@ -117,9 +129,9 @@ body {
   background-color: #b5e2fa; /* Xanh pastel nhạt */
   color: #4a6572;
   border: none;
-  padding: 12px 24px;
+  padding: clamp(9px, 1.6vh, 12px) clamp(18px, 3.5vw, 24px);
   border-radius: 25px;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 2vh, 1rem);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -131,20 +143,20 @@ body {
 
 .btn-group {
   display: flex;
-  gap: 15px;
-  margin-top: 15px;
+  gap: 12px;
+  margin-top: 10px;
 }
 
 /* Custom Component Views */
 .avatar-box {
-  width: 140px;
-  height: 140px;
+  width: clamp(95px, 16vh, 130px);
+  height: clamp(95px, 16vh, 130px);
   border-radius: 50%;
   background-color: #fce7f0; /* Nền hồng pastel nhạt */
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: clamp(8px, 1.5vh, 14px);
   overflow: hidden;
   border: 3px solid #ffb7b2;
 }
@@ -156,62 +168,308 @@ body {
   object-fit: cover;
 }
 
-.video-container {
+/* Record Player Component */
+.record-player {
   width: 100%;
-  aspect-ratio: 16/9;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(123, 164, 217, 0.2);
-  margin-bottom: 12px;
-  border: 2px solid #b5e2fa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 8px;
 }
 
-.video-container iframe {
+.turntable {
+  position: relative;
+  width: clamp(140px, 22vh, 180px);
+  height: clamp(140px, 22vh, 180px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto clamp(6px, 1.2vh, 10px);
+}
+
+/* Vinyl Record */
+.vinyl-record {
   width: 100%;
   height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #2a2a2a 0%, #111111 50%, #050505 100%);
+  position: relative;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25), inset 0 0 0 2px #444;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: spinRecord 6s linear infinite;
+  animation-play-state: paused;
 }
 
-.song-info h3 {
+.vinyl-record.playing {
+  animation-play-state: running;
+}
+
+/* Concentric vinyl grooves and sheen */
+.vinyl-grooves {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle,
+    transparent 0,
+    transparent 3px,
+    rgba(255, 255, 255, 0.05) 4px,
+    transparent 5px
+  ),
+  conic-gradient(
+    from 45deg,
+    rgba(255, 255, 255, 0.12) 0deg,
+    transparent 60deg,
+    rgba(255, 255, 255, 0.12) 180deg,
+    transparent 240deg,
+    rgba(255, 255, 255, 0.12) 360deg
+  );
+  pointer-events: none;
+}
+
+/* Center artwork of vinyl */
+.vinyl-center {
+  width: 44%;
+  height: 44%;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 0 2px #181818, 0 0 0 4px #ffb7b2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vinyl-center .cover-art {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.center-hole {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid #333333;
+  z-index: 2;
+}
+
+/* Tone Arm */
+.tone-arm {
+  position: absolute;
+  top: 0;
+  right: -6px;
+  width: 50px;
+  height: 100px;
+  pointer-events: none;
+  transform-origin: 40px 10px;
+  transform: rotate(-18deg);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 5;
+}
+
+.record-player.playing .tone-arm {
+  transform: rotate(14deg);
+}
+
+.tone-arm-base {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(135deg, #d8d8d8, #888888);
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.tone-arm-rod {
+  position: absolute;
+  top: 12px;
+  right: 11px;
+  width: 3px;
+  height: 70px;
+  background: linear-gradient(to right, #ffffff, #aaaaaa, #777777);
+  border-radius: 2px;
+  transform: rotate(-8deg);
+  transform-origin: top center;
+}
+
+.tone-arm-head {
+  position: absolute;
+  bottom: 18px;
+  left: 14px;
+  width: 12px;
+  height: 16px;
+  background: #ff9994;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+@keyframes spinRecord {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.song-info {
+  margin-bottom: 8px;
+}
+
+.song-info .track-title {
   color: #4a6572;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 2px;
 }
 
 .song-info .artist {
   color: #8c9ba5;
   font-size: 0.9rem;
-  margin-bottom: 12px;
+}
+
+/* Essential Audio Controls */
+.player-controls {
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.time-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.time-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #7ba4d9;
+  min-width: 32px;
+}
+
+.progress-bar {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: #fce7f0;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.progress-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffb7b2;
+  box-shadow: 0 1px 4px rgba(255, 183, 178, 0.6);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.progress-bar::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  background: #ff9994;
+}
+
+.progress-bar::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: none;
+  border-radius: 50%;
+  background: #ffb7b2;
+  box-shadow: 0 1px 4px rgba(255, 183, 178, 0.6);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.progress-bar::-moz-range-thumb:hover {
+  transform: scale(1.2);
+  background: #ff9994;
+}
+
+.play-btn {
+  background: #ffb7b2;
+  color: #ffffff;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 183, 178, 0.5);
+  transition: all 0.2s ease;
+}
+
+.play-btn:hover {
+  background: #ff9994;
+  transform: scale(1.05);
+}
+
+.play-btn:active {
+  transform: scale(0.95);
+}
+
+.control-icon {
+  display: block;
+}
+
+.control-icon.hidden {
+  display: none;
 }
 
 .quote {
   font-style: italic;
   color: #6c7a89;
-  font-size: 0.9rem;
-  line-height: 1.4;
-  margin-bottom: 20px;
+  font-size: clamp(0.78rem, 1.6vh, 0.88rem);
+  line-height: 1.35;
+  margin-bottom: clamp(10px, 1.8vh, 16px);
   background-color: #fdf2f4;
-  padding: 12px;
+  padding: clamp(8px, 1.4vh, 12px);
   border-radius: 10px;
 }
 
 .mail-icon-box {
-  width: 100px;
-  height: 100px;
+  width: clamp(75px, 14vh, 95px);
+  height: clamp(75px, 14vh, 95px);
   background-color: #e2f0cb; /* Xanh lá/trắng pastel điểm nhấn */
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2.8rem;
-  margin-bottom: 20px;
+  font-size: clamp(2.2rem, 4vh, 2.8rem);
+  margin-bottom: clamp(12px, 2.5vh, 20px);
   border: 3px solid #b5e2fa;
 }
 
 .image-card {
-  width: 220px;
-  height: 220px;
+  width: clamp(150px, 24vh, 200px);
+  height: clamp(150px, 24vh, 200px);
   border-radius: 16px;
   overflow: hidden;
-  margin-bottom: 20px;
+  margin-bottom: clamp(10px, 2vh, 18px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   border: 3px solid #ffb7b2;
 }
@@ -223,26 +481,28 @@ body {
 }
 
 .blue-hearts {
-  font-size: 1.5rem;
-  margin-bottom: 15px;
+  font-size: clamp(1.2rem, 2.5vh, 1.5rem);
+  margin-bottom: clamp(8px, 1.5vh, 14px);
   letter-spacing: 4px;
 }
 
 .letter-card {
   background-color: #fff9fa; /* Trắng ngà pha hồng rất nhẹ */
-  padding: 24px;
+  padding: clamp(12px, 2vh, 18px);
   border-radius: 16px;
   text-align: left;
   box-shadow: 0 4px 20px rgba(255, 183, 178, 0.15);
-  margin-bottom: 20px;
+  margin-bottom: clamp(10px, 2vh, 16px);
   border: 1px solid #ffb7b2;
+  overflow-y: auto;
+  max-height: clamp(180px, 45vh, 320px);
 }
 
 .letter-card p {
   color: #5c6b73;
-  font-size: 0.92rem;
-  line-height: 1.6;
-  margin-bottom: 12px;
+  font-size: clamp(0.82rem, 1.6vh, 0.9rem);
+  line-height: 1.45;
+  margin-bottom: 8px;
 }
 
 .letter-card p:last-child {
