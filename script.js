@@ -8,13 +8,18 @@ function goToStep(stepNumber) {
     targetStep.classList.add('active');
   }
 
-  // Nếu chuyển ra khỏi Step 2 (Music Player), tạm dừng nhạc
-  if (stepNumber !== 2) {
-    const audio = document.getElementById('audioPlayer');
-    if (audio && !audio.paused) {
-      audio.pause();
+  // Quản lý hiển thị nút floating music icon:
+  // Xuất hiện trên các màn hình tiếp theo (Step 3, 4, 5, 6 - Message/Letter screens)
+  const floatingMusicBtn = document.getElementById('floatingMusicBtn');
+  if (floatingMusicBtn) {
+    if (stepNumber >= 3) {
+      floatingMusicBtn.classList.remove('hidden');
+    } else {
+      floatingMusicBtn.classList.add('hidden');
     }
   }
+
+  // Chú ý: Không dừng âm thanh khi chuyển màn hình để audio phát liên tục (seamless SPA playback)
 }
 
 // Format seconds into m:ss format
@@ -25,7 +30,7 @@ function formatTime(seconds) {
   return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
 }
 
-// Khởi tạo Vinyl Audio Player
+// Khởi tạo Audio Player và các Controls (Screen 1 Vinyl Controls + Floating Music Button)
 function initAudioPlayer() {
   const audio = document.getElementById('audioPlayer');
   const playPauseBtn = document.getElementById('playPauseBtn');
@@ -36,36 +41,73 @@ function initAudioPlayer() {
   const durationTimeEl = document.getElementById('durationTime');
   const vinylRecord = document.getElementById('vinylRecord');
   const recordPlayer = document.querySelector('.record-player');
+  const floatingMusicBtn = document.getElementById('floatingMusicBtn');
 
-  if (!audio || !playPauseBtn) return;
+  if (!audio) return;
 
   function updatePlayState(isPlaying) {
     if (isPlaying) {
-      playIcon.classList.add('hidden');
-      pauseIcon.classList.remove('hidden');
-      vinylRecord.classList.add('playing');
+      if (playIcon) playIcon.classList.add('hidden');
+      if (pauseIcon) pauseIcon.classList.remove('hidden');
+      if (vinylRecord) {
+        vinylRecord.classList.add('playing');
+        vinylRecord.classList.add('animate-spin');
+      }
       if (recordPlayer) recordPlayer.classList.add('playing');
+      if (floatingMusicBtn) {
+        floatingMusicBtn.classList.add('active');
+        floatingMusicBtn.classList.add('playing');
+      }
     } else {
-      playIcon.classList.remove('hidden');
-      pauseIcon.classList.add('hidden');
-      vinylRecord.classList.remove('playing');
+      if (playIcon) playIcon.classList.remove('hidden');
+      if (pauseIcon) pauseIcon.classList.add('hidden');
+      if (vinylRecord) {
+        vinylRecord.classList.remove('playing');
+        vinylRecord.classList.remove('animate-spin');
+      }
       if (recordPlayer) recordPlayer.classList.remove('playing');
+      if (floatingMusicBtn) {
+        floatingMusicBtn.classList.remove('active');
+        floatingMusicBtn.classList.remove('playing');
+      }
     }
   }
 
-  // Play / Pause toggle
-  playPauseBtn.addEventListener('click', () => {
+  // Hàm chuyển đổi trạng thái Play/Pause an toàn cho mobile với .catch()
+  function togglePlayPause() {
     if (audio.paused) {
-      audio.play().then(() => {
-        updatePlayState(true);
-      }).catch(err => {
-        console.warn('Playback error:', err);
-      });
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            updatePlayState(true);
+          })
+          .catch(err => {
+            console.warn('Playback error / Autoplay blocked:', err);
+            updatePlayState(false);
+          });
+      }
     } else {
       audio.pause();
       updatePlayState(false);
     }
-  });
+  }
+
+  // Play / Pause toggle trên Screen 1 (Vinyl Player)
+  if (playPauseBtn) {
+    playPauseBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      togglePlayPause();
+    });
+  }
+
+  // Play / Pause toggle trên Floating Music Button (Screen 2 / các bước sau)
+  if (floatingMusicBtn) {
+    floatingMusicBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      togglePlayPause();
+    });
+  }
 
   audio.addEventListener('play', () => updatePlayState(true));
   audio.addEventListener('pause', () => updatePlayState(false));
@@ -74,8 +116,8 @@ function initAudioPlayer() {
   audio.addEventListener('ended', () => {
     updatePlayState(false);
     audio.currentTime = 0;
-    progressBar.value = 0;
-    currentTimeEl.innerText = '0:00';
+    if (progressBar) progressBar.value = 0;
+    if (currentTimeEl) currentTimeEl.innerText = '0:00';
   });
 
   // Lấy duration chuẩn xác của audio (hỗ trợ Opus khi browser báo infinity)
@@ -92,6 +134,7 @@ function initAudioPlayer() {
   }
 
   function updateDurationDisplay() {
+    if (!durationTimeEl) return;
     const totalDuration = getAudioDuration();
     durationTimeEl.innerText = formatTime(totalDuration);
   }
@@ -106,24 +149,26 @@ function initAudioPlayer() {
     const totalDuration = getAudioDuration();
     if (!totalDuration) return;
     const progressPercent = (audio.currentTime / totalDuration) * 100;
-    progressBar.value = Math.min(100, Math.max(0, progressPercent));
-    currentTimeEl.innerText = formatTime(audio.currentTime);
+    if (progressBar) progressBar.value = Math.min(100, Math.max(0, progressPercent));
+    if (currentTimeEl) currentTimeEl.innerText = formatTime(audio.currentTime);
   });
 
   // Tua nhạc khi kéo hoặc click thanh thời gian
-  progressBar.addEventListener('input', () => {
-    const totalDuration = getAudioDuration();
-    if (!totalDuration) return;
-    const seekTime = (progressBar.value / 100) * totalDuration;
-    currentTimeEl.innerText = formatTime(seekTime);
-  });
+  if (progressBar) {
+    progressBar.addEventListener('input', () => {
+      const totalDuration = getAudioDuration();
+      if (!totalDuration) return;
+      const seekTime = (progressBar.value / 100) * totalDuration;
+      if (currentTimeEl) currentTimeEl.innerText = formatTime(seekTime);
+    });
 
-  progressBar.addEventListener('change', () => {
-    const totalDuration = getAudioDuration();
-    if (!totalDuration) return;
-    const seekTime = (progressBar.value / 100) * totalDuration;
-    audio.currentTime = seekTime;
-  });
+    progressBar.addEventListener('change', () => {
+      const totalDuration = getAudioDuration();
+      if (!totalDuration) return;
+      const seekTime = (progressBar.value / 100) * totalDuration;
+      audio.currentTime = seekTime;
+    });
+  }
 }
 
 // Tạo hiệu ứng trái tim trôi nhẹ ở background

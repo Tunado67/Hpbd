@@ -11,6 +11,16 @@
   <!-- Hiệu ứng trái tim rơi nền -->
   <div class="hearts-bg" id="heartsBg"></div>
 
+  <!-- Native Audio Element at Root Structure -->
+  <audio id="audioPlayer" src="love-me-not.opus" preload="metadata"></audio>
+
+  <!-- Fixed Floating Music Toggle Button for Screen 2 / letter screens -->
+  <button id="floatingMusicBtn" class="floating-music-btn hidden" aria-label="Toggle background music">
+    <svg class="music-note-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+      <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+    </svg>
+  </button>
+
   <main class="container">
     
     <!-- STEP 1: CHÀO MỪNG -->
@@ -24,7 +34,7 @@
       <button class="btn-primary" onclick="goToStep(2)">Next!! ^w^</button>
     </section>
 
-    <!-- STEP 2: BÀI HÁT TẶNG BẠN -->
+    <!-- STEP 2 / SCREEN 1: BÀI HÁT TẶNG BẠN (VINYL RECORD PLAYER) -->
     <section class="step" id="step2">
       <h2 class="title-blue">🎵 A Song Just For You</h2>
 
@@ -44,8 +54,6 @@
             <div class="tone-arm-head"></div>
           </div>
         </div>
-
-        <audio id="audioPlayer" src="love-me-not.opus" preload="metadata"></audio>
 
         <div class="song-info">
           <h3 class="track-title">Love Me Not</h3>
