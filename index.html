@@ -101,7 +101,7 @@
         <img src="./img2.jpg" alt="Cute Cat">
       </div>
       <div class="btn-group">
-        <button class="btn-primary" onclick="goToStep(6)">Open it</button>
+        <button class="btn-primary" onclick="openLetter()">Open it</button>
         <button class="btn-secondary" onclick="goToStep(5)">No ty</button>
       </div>
     </section>
@@ -112,16 +112,28 @@
       <button class="btn-primary" onclick="goToStep(4)">Again..?</button>
     </section>
 
-    <!-- STEP 6: NỘI DUNG LÁ THƯ FINAL -->
+    <!-- STEP 6: NỘI DUNG LÁ THƯ FINAL VỚI HIỆU ỨNG MỞ THƯ -->
     <section class="step" id="step6">
-      <h2 class="title-blue">💌 Happy Birthday</h2>
-      <div class="blue-hearts">💙💙💙</div>
-      <div class="letter-card">
-        <p>Happy birthday, Daisy. I'm so glad I got to meet you, and thank you for giving me a second chance to get to know you. I want you to know that you keep me going even when things get hard, and that inspires me so much.</p>
-        <p>Thank you for being understanding of me, and I hope this isn't too much for you cause I know you struggle with avoidant feelings sometimes, so I'm sorry in advance if I ever overwhelm you Huhu.</p>
-        <p>But most of all, you deserve the very best, today and every day. Enjoy your day po happy birthday again, Pookie!!! 💗</p>
+      <div class="envelope-wrapper" id="envelopeWrapper">
+        <div class="envelope" id="envelope">
+          <div class="envelope-flap" id="envelopeFlap">
+            <div class="envelope-seal">💌</div>
+          </div>
+          <div class="envelope-pocket"></div>
+          <div class="confetti-burst" id="confettiBurst"></div>
+
+          <div class="letter-card" id="letterCard">
+            <h2 class="letter-greeting">Chúc mừng sinh nhật Hoài!!!💝</h2>
+            <div class="letter-content">
+              <p>Chúc mừng ngày đặc biệt - 05/11 sinh nhật của mày sau 6 năm đồng hành cùng nhau. Chúc mày tuổi mới bình an, hạnh phúc và gặp nhiều điều may mắn.</p>
+              <p>Mong rằng chặng đường phía trước dù có như thế nào, tao và mày sẽ tiếp tục đồng hành và sát cánh bên nhau như cách 6 năm qua chúng ta gắn bó với nhau.</p>
+              <p>Mày xứng đáng nhận được điều tốt đẹp nhất cho dù là hôm nay hay tất cả những ngày khác.</p>
+              <p class="letter-signature">Chúc mừng sinh nhật bro lần nữa🎂🙏🙏🙏💝🎉.</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <button class="btn-primary" onclick="goToStep(1)">Replay 🔄</button>
+      <button class="btn-primary replay-btn" onclick="goToStep(1)">Replay 🔄</button>
     </section>
 
   </main>
