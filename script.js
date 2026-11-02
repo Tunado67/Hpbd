@@ -19,7 +19,73 @@ function goToStep(stepNumber) {
     }
   }
 
+  // Khi rời khỏi Step 6 (ví dụ Replay về Step 1), reset trạng thái phong bì để có thể mở lại mượt mà
+  if (stepNumber !== 6) {
+    resetEnvelope();
+  }
+
   // Chú ý: Không dừng âm thanh khi chuyển màn hình để audio phát liên tục (seamless SPA playback)
+}
+
+// Reset trạng thái phong bì lá thư
+function resetEnvelope() {
+  const envelope = document.getElementById('envelope');
+  const confettiBurst = document.getElementById('confettiBurst');
+  if (envelope) {
+    envelope.classList.remove('opened');
+  }
+  if (confettiBurst) {
+    confettiBurst.innerHTML = '';
+  }
+}
+
+// Hiệu ứng pháo hoa trái tim / confetti khi mở thư
+function triggerConfettiBurst() {
+  const container = document.getElementById('confettiBurst');
+  if (!container) return;
+  container.innerHTML = '';
+
+  const particles = ['🎉', '✨', '💖', '⭐', '🌸', '💝', '🎂'];
+  const count = 18;
+
+  for (let i = 0; i < count; i++) {
+    const el = document.createElement('span');
+    el.className = 'confetti-particle';
+    el.innerText = particles[Math.floor(Math.random() * particles.length)];
+
+    const angle = (i / count) * 2 * Math.PI + (Math.random() * 0.2);
+    const distance = 80 + Math.random() * 90;
+    const x = Math.cos(angle) * distance;
+    const y = Math.sin(angle) * distance;
+
+    el.style.setProperty('--x', `${x}px`);
+    el.style.setProperty('--y', `${y}px`);
+    el.style.animationDelay = `${Math.random() * 0.15}s`;
+
+    container.appendChild(el);
+  }
+
+  // Dọn dẹp hạt sau khi hiệu ứng kết thúc
+  setTimeout(() => {
+    if (container) container.innerHTML = '';
+  }, 1200);
+}
+
+// Mở thư từ Step 4 với chuỗi hiệu ứng mở phong bì (Opening Effect)
+function openLetter() {
+  goToStep(6);
+  const envelope = document.getElementById('envelope');
+
+  if (envelope) {
+    envelope.classList.remove('opened');
+    // Bắt đầu mở nắp phong bì và trồi lá thư
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        envelope.classList.add('opened');
+        triggerConfettiBurst();
+      }, 100);
+    });
+  }
 }
 
 // Format seconds into m:ss format
